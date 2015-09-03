@@ -74,7 +74,6 @@ function process10day(data) {
 			hl.html("High: " + arr2[Math.floor(i/2)].high.fahrenheit);
 			hl.addClass("high");
 		}
-		
 
 		var hlM = $("<td>");
 		if(i % 2 != 0){
@@ -134,7 +133,7 @@ function process10day(data) {
 }
 
 function processCams(data) {
-	for(var i = 0; i < 10 && i < data.webcams.length; i++){
+	for(var i = 0; i < 5 && i < data.webcams.length; i++){
 		$("#webcam" + i).attr('src', data.webcams[i].CURRENTIMAGEURL);
 	}
 }
