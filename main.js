@@ -13,8 +13,9 @@ var loc = "autoip";
 var city = "";
 var state = "";
 var zip = "";
+var degreeCountries = ["USA", "Belize", "Cayman Islands", "Palau"]
 
-var metric = false;
+var metric = true;
 
 function init() {
 	$("#go").click(goClicked);
@@ -43,7 +44,14 @@ function processData (data) {
 	console.log(data);
 	city = data.location.city;
 	state = data.location.state;
+	if(state == "") {
+		state = data.location.country_name;
+	}
 	zip = data.location.zip
+	metric = true;
+	if(degreeCountries.indexOf(data.location.country_name) !== -1) {
+		metric = false;
+	}
 	$("#loc").text(city + ", " + state + "  " + zip);
 	requestData("http://api.wunderground.com/api/77b4e7571579589f/astronomy/q/"+state+"/"+city+".json", processTime);
 	requestData("http://api.wunderground.com/api/77b4e7571579589f/webcams/q/"+state+"/"+city+".json", processCams);
@@ -65,7 +73,7 @@ function process10day(data) {
 
 		var span = $("<span>");
 		
-		var hl = $("<td>");
+		var hl = $("<div>");
 		if(i % 2 != 0){
 			hl.html("Low: " + arr2[Math.floor(i/2)].low.fahrenheit);
 			hl.addClass("low");
@@ -82,35 +90,29 @@ function process10day(data) {
 		else {
 			hlM.html("High: " + arr2[Math.floor(i/2)].high.celsius);
 		}
-		hlM.addClass("highLow");
+		hlM.addClass("low");
 
 		var img = $("<img>");
 		img.attr("src", arr[i].icon_url)
 
 		span.append(img, hl, hlM);
 		
-		var h3 = $("<h4>");
-		h3.addClass("dayTitle");
-		h3.text(arr[i].title.substr(0,3))
-		
-		var desc = $("<div>");
-		desc.addClass("dayDesc");
-		desc.html(arr[i].fcttext);
-		
-		var descM = $("<div>");
-		descM.addClass("dayDescM");
-		descM.html(arr[i].fcttext_metric);
-
+		if(i%2 == 0) {
+			var h3 = $("<h4>");
+			h3.addClass("dayTitle");
+			h3.text(arr[i].title.substr(0,3))
+			console.log(i);
+			console.log(arr[i].title);
+			console.log(img.attr('src'))
+		}
 		if(metric) {
-			desc.hide();
 			hl.hide();
 		}
 		else {
-			descM.hide();
 			hlM.hide();
 		}
 
-		td.append(span, img, h3, descM);
+		td.append(span, img, h3);
 		if (i % 2 == 0) {
 			if(i > 9) {
 				trD2.append(td)
