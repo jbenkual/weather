@@ -1,4 +1,5 @@
 require("../index.css");
+require("../../node_modules/bootstrap-webpack/index.js");
 var $ = require("jquery");
 
 'use strict';

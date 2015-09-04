@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/jbenkual/weather/issues"
   },
-  "homepage": "https://github.com/jbenkual/weather#readme"
+  "homepage": "https://github.com/jbenkual/weather#readme",
+  "dependencies": {
+    "css-loader": "^0.17.0",
+    "file-loader": "^0.8.4",
+    "imports-loader": "^0.6.4",
+    "less-loader": "^2.2.0",
+    "url-loader": "^0.5.6"
+  }
 }
